@@ -13,6 +13,13 @@
     <td><%= link_to topic.title, topic %></td>
     <td><%= pluralize(topic.votes.length, "vote") %></td>
     <td><%= button_to "+1", votes_path(:topic_id => topic.id), :method => :post %></td>
+
+    <!-- Instead of the post method which would call create we call the delete method
+    which calls destroy on the last vote created for the topic -->
+    <% if topic.votes.last != nil %>
+      <td><%= button_to "-1", topic.votes.last, :method => :delete %></td>
+    <% end %>
+
     <td><%= link_to 'Delete', topic, method: :delete %></td>
   </tr>
 <% end %>
